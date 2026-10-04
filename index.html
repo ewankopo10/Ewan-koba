@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birthday Greeting</title>
+
+    <style>
+        body {
+            background-color: #ffe6f2;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        h1 {
+            color: yellow;
+        }
+
+        .envelope {
+            font-size: 100px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .envelope:hover {
+            transform: scale(1.1);
+        }
+
+        #message {
+            display: none;
+            background: skyblue;
+            width: 350px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px white    
+        }
+
+        .cake {
+            font-size: 80px;
+        }
+
+        p {
+            color: #555;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>💌 You Have a Message!</h1>
+
+    <div class="envelope" onclick="openMessage()">
+        ✉️
+    </div>
+
+    <p>Click the envelope 💗</p>
+
+    <div id="message">
+
+        <div class="cake">🎂</div>
+
+        <h1>🎉 Happy Birthday Geli!! 🎉</h1>
+
+        <p>
+            Wishing you a very happy birthday!
+            May your day be filled with happiness,
+            laughter, and wonderful memories. 💗
+        </p>
+
+        <p>Enjoy your special day! 🎁✨</p>
+
+    </div>
+
+    <script>
+        function openMessage() {
+            document.getElementById("message").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
