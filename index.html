@@ -1,82 +1,601 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Birthday Greeting</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            background-color: yellow;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 80px;
-        }
+  <title>Birthday Surprise 🎂</title>
 
-        h1 {
-            color: Black;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        .envelope {
-            font-size: 100px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+    }
 
-        .envelope:hover {
-            transform: scale(1.1);
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffd6e7, #d9e7ff);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+    }
 
-        #message {
-            display: none;
-            background: skyblue;
-            width: 350px;
-            margin: 30px auto;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px yellow;   
-        }
+    .container {
+      width: 100%;
+      max-width: 650px;
+      min-height: 100vh;
+      padding: 35px 20px 50px;
+      text-align: center;
+    }
 
-        .cake {
-            font-size: 80px;
-        }
+    /* TITLE */
 
-        p {
-            color: #555;
-            font-size: 17px;
-        }
-    </style>
+    h1 {
+      font-size: clamp(25px, 7vw, 40px);
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .subtitle {
+      font-size: clamp(14px, 4vw, 18px);
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* CAKE */
+
+    .cake {
+      width: min(200px, 60vw);
+      height: min(150px, 45vw);
+      margin: 0 auto;
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .cake:hover {
+      transform: scale(1.05);
+    }
+
+    .cake-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 60%;
+      background: #ff8fb1;
+      border-radius: 15px 15px 25px 25px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .cake-top {
+      position: absolute;
+      bottom: 47%;
+      left: 7.5%;
+      width: 85%;
+      height: 37%;
+      background: #fff3f7;
+      border-radius: 15px;
+    }
+
+    .icing {
+      position: absolute;
+      bottom: 50%;
+      left: 7.5%;
+      width: 85%;
+      height: 17%;
+      background: white;
+      border-radius: 15px;
+    }
+
+    .candle {
+      position: absolute;
+      width: 7%;
+      height: 30%;
+      background: #7f9cff;
+      left: 46.5%;
+      bottom: 80%;
+      border-radius: 5px;
+    }
+
+    .flame {
+      position: absolute;
+      width: 9%;
+      height: 17%;
+      background: #ffba3a;
+      border-radius: 50%;
+      left: 45.5%;
+      bottom: 107%;
+      animation: flame 0.7s infinite alternate;
+    }
+
+    @keyframes flame {
+      from {
+        transform: scale(0.9) rotate(-4deg);
+      }
+
+      to {
+        transform: scale(1.1) rotate(4deg);
+      }
+    }
+
+    .cake-text {
+      font-size: 14px;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    #effectName {
+      color: #ff638e;
+      font-weight: bold;
+      min-height: 25px;
+      font-size: 16px;
+    }
+
+    /* ENVELOPE */
+
+    .envelope-section {
+      margin-top: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      pointer-events: none;
+      transition: 0.7s;
+    }
+
+    .envelope-section.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .envelope {
+      width: min(220px, 65vw);
+      height: min(140px, 42vw);
+      background: #f5f5f5;
+      margin: auto;
+      position: relative;
+      cursor: pointer;
+      border-radius: 6px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .envelope:hover {
+      transform: translateY(-5px);
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      width: 75%;
+      height: 115%;
+      background: #e6e6e6;
+      transform: rotate(45deg);
+      top: -70%;
+      left: 13%;
+    }
+
+    .envelope::after {
+      content: "💌";
+      position: absolute;
+      font-size: clamp(35px, 10vw, 45px);
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+    }
+
+    .envelope-label {
+      font-size: clamp(13px, 4vw, 16px);
+      color: #555;
+      padding: 0 10px;
+    }
+
+    /* MESSAGE */
+
+    .message-box {
+      background: white;
+      padding: clamp(20px, 6vw, 30px);
+      margin: 30px auto 0;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      transition: 0.6s;
+    }
+
+    .message-box.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .message-box h2 {
+      color: #ff638e;
+      font-size: clamp(22px, 6vw, 30px);
+      margin-top: 0;
+    }
+
+    .message-box p {
+      color: #555;
+      line-height: 1.7;
+      font-size: clamp(14px, 4vw, 16px);
+      margin: 15px 0;
+    }
+
+    /* EFFECTS */
+
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 10;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-30px) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .pop {
+      position: fixed;
+      font-size: clamp(22px, 7vw, 35px);
+      pointer-events: none;
+      animation: popEffect 1.4s forwards;
+      z-index: 20;
+    }
+
+    @keyframes popEffect {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+
+      60% {
+        transform: scale(1.5);
+      }
+
+      100% {
+        transform: translateY(-100px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* SMALL PHONES */
+
+    @media (max-width: 380px) {
+
+      .container {
+        padding: 25px 15px 40px;
+      }
+
+      h1 {
+        margin-top: 5px;
+      }
+
+      .subtitle {
+        margin-bottom: 25px;
+      }
+
+      .envelope-section {
+        margin-top: 30px;
+      }
+
+      .message-box {
+        border-radius: 15px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <h1>💌 You Have a Message!</h1>
+  <div class="container">
 
-    <div class="envelope" onclick="openMessage()">
-        ✉️
-    </div>
+    <h1>🎉 A Birthday Surprise 🎉</h1>
 
-    <p>Click the envelope 💗</p>
+    <p class="subtitle">
+      Click the cake first!
+    </p>
 
-    <div id="message">
+    <!-- CAKE -->
 
-        <div class="cake">🎂</div>
+    <div class="cake" id="cake">
 
-        <h1>🎉 Happy Birthday Geli!! 🎉</h1>
-
-        <p>
-            Wishing you a very happy birthday!
-            May your day be filled with happiness,
-            laughter, and wonderful memories. 💗
-        </p>
-
-        <p></p>
+      <div class="cake-bottom"></div>
+      <div class="cake-top"></div>
+      <div class="icing"></div>
+      <div class="candle"></div>
+      <div class="flame"></div>
 
     </div>
 
-    <script>
-        function openMessage() {
-            document.getElementById("message").style.display = "block";
-        }
-    </script>
+    <p class="cake-text">
+      🎂 Tap the cake
+    </p>
+
+    <div id="effectName"></div>
+
+
+    <!-- ENVELOPE -->
+
+    <div class="envelope-section" id="envelopeSection">
+
+      <div class="envelope" id="envelope"></div>
+
+      <p class="envelope-label">
+        You got a letter! 💌<br>
+        Tap the envelope
+      </p>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+
+    <div class="message-box" id="messageBox">
+
+      <h2>Happy Birthday! 🎂💗</h2>
+
+      <p>
+        Happy Birthday! I hope your special day is filled
+        with happiness, laughter, and unforgettable memories.
+      </p>
+
+      <p>
+        I hope this new chapter of your life brings you
+        more reasons to smile, more opportunities,
+        and more beautiful moments.
+      </p>
+
+      <p>
+        Enjoy your day because you deserve it. 🎉
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const cake = document.getElementById("cake");
+    const envelopeSection =
+      document.getElementById("envelopeSection");
+
+    const envelope =
+      document.getElementById("envelope");
+
+    const messageBox =
+      document.getElementById("messageBox");
+
+    const effectName =
+      document.getElementById("effectName");
+
+    let cakeClicked = false;
+
+
+    /* CAKE CLICK */
+
+    cake.addEventListener("click", function () {
+
+      const randomNumber =
+        Math.floor(Math.random() * 4);
+
+
+      if (randomNumber === 0) {
+
+        confettiEffect();
+
+        effectName.textContent =
+          "🎉 CONFETTI!";
+
+      }
+
+      else if (randomNumber === 1) {
+
+        heartEffect();
+
+        effectName.textContent =
+          "💗 HEARTS!";
+
+      }
+
+      else if (randomNumber === 2) {
+
+        starEffect();
+
+        effectName.textContent =
+          "⭐ STARS!";
+
+      }
+
+      else {
+
+        balloonEffect();
+
+        effectName.textContent =
+          "🎈 BALLOONS!";
+
+      }
+
+
+      if (!cakeClicked) {
+
+        setTimeout(function () {
+
+          envelopeSection.classList.add("show");
+
+        }, 700);
+
+        cakeClicked = true;
+      }
+
+    });
+
+
+    /* ENVELOPE CLICK */
+
+    envelope.addEventListener("click", function () {
+
+      messageBox.classList.add("show");
+
+      envelopeSection.querySelector(
+        ".envelope-label"
+      ).innerHTML =
+        "Letter opened! 💌";
+
+      heartEffect();
+
+    });
+
+
+    /* CONFETTI */
+
+    function confettiEffect() {
+
+      const confetti = [
+        "🎉",
+        "🎊",
+        "✨",
+        "🎂",
+        "💖"
+      ];
+
+      for (let i = 0; i < 40; i++) {
+
+        const particle =
+          document.createElement("div");
+
+        particle.classList.add("particle");
+
+        particle.textContent =
+          confetti[
+            Math.floor(
+              Math.random() * confetti.length
+            )
+          ];
+
+        particle.style.left =
+          Math.random() * 100 + "vw";
+
+        particle.style.top = "-30px";
+
+        particle.style.fontSize =
+          (15 + Math.random() * 20) + "px";
+
+        particle.style.animationDuration =
+          (2 + Math.random() * 2) + "s";
+
+        document.body.appendChild(particle);
+
+        setTimeout(function () {
+          particle.remove();
+        }, 4000);
+
+      }
+    }
+
+
+    /* HEARTS */
+
+    function heartEffect() {
+
+      createPopEffect([
+        "💗",
+        "💕",
+        "💖",
+        "❤️"
+      ]);
+
+    }
+
+
+    /* STARS */
+
+    function starEffect() {
+
+      createPopEffect([
+        "⭐",
+        "🌟",
+        "✨",
+        "💫"
+      ]);
+
+    }
+
+
+    /* BALLOONS */
+
+    function balloonEffect() {
+
+      createPopEffect([
+        "🎈",
+        "🎈",
+        "🎈",
+        "🎉"
+      ]);
+
+    }
+
+
+    /* POP EFFECT */
+
+    function createPopEffect(emojis) {
+
+      for (let i = 0; i < 25; i++) {
+
+        setTimeout(function () {
+
+          const pop =
+            document.createElement("div");
+
+          pop.classList.add("pop");
+
+          pop.textContent =
+            emojis[
+              Math.floor(
+                Math.random() * emojis.length
+              )
+            ];
+
+          pop.style.left =
+            Math.random() * 90 + "vw";
+
+          pop.style.top =
+            (30 + Math.random() * 60) + "vh";
+
+          document.body.appendChild(pop);
+
+          setTimeout(function () {
+            pop.remove();
+          }, 1500);
+
+        }, i * 50);
+
+      }
+    }
+
+  </script>
 
 </body>
 </html>
